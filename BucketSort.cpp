@@ -1,40 +1,22 @@
 #include "BucketSort.h"
 
-void BucketSort::sort(std::vector<int>& arr) {
-    if (arr.empty()) return;
+void BucketSort::sort(std::vector<std::string>& arr) {
+    // Tworzenie 10 kubełków dla ratingów od 1 do 10
+    std::vector<std::list<std::string>> buckets(10);
 
-    int maxVal = arr[0];
-    int minVal = arr[0];
-    for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] > maxVal) maxVal = arr[i];
-        if (arr[i] < minVal) minVal = arr[i];
+    // Przypisanie stringów do odpowiednich kubełków na podstawie ich ratingu
+    for (const auto& str : arr) {
+        int rating = getRating(str); // Zakładamy, że getRating zwraca wartość ratingu z zakresu 1-10
+        if (rating >= 1 && rating <= 10) {
+            buckets[rating - 1].push_back(str); // Rating 1 trafia do buckets[0], rating 10 do buckets[9]
+        }
     }
 
-    int bucketSize = maxVal - minVal + 1;
-    std::vector<std::vector<int>> bucket(bucketSize);
-    
-    for (int num : arr) {
-        bucket[num - minVal].push_back(num);
-    }
-
+    // Zbieranie posortowanych danych z kubełków i zapisywanie ich z powrotem do arr
     int index = 0;
-    for (auto& b : bucket) {
-        insertionSort(b); // Użyj prostego sortowania wstawiania dla kubełków
-        for (int num : b) {
-            arr[index++] = num;
+    for (auto& bucket : buckets) {
+        for (const auto& str : bucket) {
+            arr[index++] = str;
         }
-    }
-}
-
-void BucketSort::insertionSort(std::vector<int>& arr) {
-    for (int i = 1; i < arr.size(); i++) {
-        int key = arr[i];
-        int j = i - 1;
-
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key;
     }
 }

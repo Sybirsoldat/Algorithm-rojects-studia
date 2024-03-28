@@ -5,10 +5,10 @@
 
 class QuickSort : public SortStrategy {
 public:
-    void sort(std::vector<int>& arr) override;
+    void sort(std::vector<std::string>& arr) override; // Zmienione z std::vector<int>
 private:
-    void quicksort(std::vector<int>& arr, int low, int high);
-    int partition(std::vector<int>& arr, int low, int high);
+    void quicksort(std::vector<std::string>& arr, int low, int high);
+    int partition(std::vector<std::string>& arr, int low, int high);
 };
 
 #endif

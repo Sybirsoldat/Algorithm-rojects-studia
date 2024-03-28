@@ -1,35 +1,52 @@
 #include "FileIO.h"
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <vector>
 
-std::vector<int> FileIO::readNumbersFromFile(const std::string& filePath) {
-    std::vector<int> numbers;
+// Helper function to reverse the format from ID,Name,Rating to Rating,Name,ID
+std::string reverseFormat(const std::string& line) {
+    std::istringstream iss(line);
+    std::string segment;
+    std::vector<std::string> seglist;
+
+    while (std::getline(iss, segment, ',')) {
+        seglist.push_back(segment);
+    }
+
+    // Assuming the format is always ID,Name,Rating
+    if (seglist.size() == 3) {
+        return seglist[2] + "," + seglist[1] + "," + seglist[0]; // Rating,Name,ID
+    }
+    return ""; // Return empty string if the format does not match
+}
+
+std::vector<std::string> FileIO::readData(const std::string& filePath) {
+    std::vector<std::string> data;
     std::ifstream file(filePath);
     std::string line;
     if (file.is_open()) {
         while (getline(file, line)) {
-            std::istringstream iss(line);
-            int number;
-            while (iss >> number) {
-                numbers.push_back(number);
+            std::string formattedLine = reverseFormat(line);
+            if (!formattedLine.empty()) {
+                data.push_back(formattedLine);
             }
         }
         file.close();
     } else {
-        std::cerr << "Unable to open file" << std::endl;
+        std::cerr << "Unable to open file for reading: " << filePath << std::endl;
     }
-    return numbers;
+    return data;
 }
 
-void FileIO::writeNumbersToFile(const std::string& filePath, const std::vector<int>& numbers) {
+void FileIO::writeData(const std::string& filePath, const std::vector<std::string>& data) {
     std::ofstream file(filePath);
     if (file.is_open()) {
-        for (const int& number : numbers) {
-            file << number << "\n";
+        for (const auto& line : data) {
+            file << line << std::endl;
         }
         file.close();
     } else {
-        std::cerr << "Unable to open file for writing" << std::endl;
+        std::cerr << "Unable to open file for writing: " << filePath << std::endl;
     }
 }
