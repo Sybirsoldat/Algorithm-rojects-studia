@@ -13,7 +13,7 @@ std::vector<Movie> FileIO::readData(const std::string& filePath) {
         std::string part, name, ratingStr;
         float rating;
         
-        // Pomijanie ID
+        // Pomijanie pustego ID (czytamy do pierwszego przecinka i ignorujemy)
         std::getline(iss, part, ',');
 
         // Czytanie nazwy - uwzględniamy możliwość, że nazwa może zawierać przecinki
@@ -23,10 +23,11 @@ std::vector<Movie> FileIO::readData(const std::string& filePath) {
         ratingStr = line.substr(line.rfind(',') + 1);
         try {
             rating = std::stof(ratingStr);
-            movies.push_back(Movie(name, rating));
+            
         } catch (const std::invalid_argument& e) {
-            std::cerr << "Error converting rating to number: " << e.what() << '\n';
+            continue; // Pomijamy błędne wpisy
         }
+        movies.push_back(Movie(name, rating));
     }
 
     return movies;
