@@ -6,7 +6,9 @@
 
 class SortStrategy {
 public:
+    // Wirtualny destruktor
     virtual ~SortStrategy() {}
+    // Wirtualna metoda sortująca
     virtual void sort(std::vector<Movie>& arr) = 0;
 };
 

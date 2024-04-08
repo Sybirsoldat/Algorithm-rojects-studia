@@ -1,19 +1,22 @@
 #include "MergeSort.h"
 
 void MergeSort::sort(std::vector<Movie>& arr) {
+    
     if (arr.size() > 1) {
         int mid = arr.size() / 2;
+        // Podziel tablicę na dwie części
         std::vector<Movie> left(arr.begin(), arr.begin() + mid);
         std::vector<Movie> right(arr.begin() + mid, arr.end());
-
+        // Posortuj obie części
         sort(left);
         sort(right);
         merge(arr, left, right);
     }
 }
-
+// Funkcja scalająca dwie posortowane tablice
 void MergeSort::merge(std::vector<Movie>& arr, std::vector<Movie>& left, std::vector<Movie>& right) {
     int i = 0, j = 0, k = 0;
+    
     while (i < left.size() && j < right.size()) {
         if (left[i] < right[j]) {
             arr[k++] = left[i++];
@@ -27,4 +30,5 @@ void MergeSort::merge(std::vector<Movie>& arr, std::vector<Movie>& left, std::ve
     while (j < right.size()) {
         arr[k++] = right[j++];
     }
+    
 }

@@ -1,7 +1,7 @@
 #include "QuickSort.h"
 #include <algorithm> // Dla std::swap
 #include <vector>
-#include <stack>
+#include <stack> // Dla std::stack
 
 void QuickSort::sort(std::vector<Movie>& arr) {
     // Pomijamy niezastosowane parametry

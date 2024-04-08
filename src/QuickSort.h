@@ -3,7 +3,7 @@
 
 #include "SortStrategy.h"
 #include <vector>
-#include "Movie.h" // Upewnij się, że dołączyłeś definicję Movie
+#include "Movie.h" 
 
 class QuickSort : public SortStrategy {
 public:

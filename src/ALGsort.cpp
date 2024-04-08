@@ -10,24 +10,29 @@
 #include <chrono>
 #include <fstream>
 
-
+// Definicja typu czasowego
 typedef std::chrono::milliseconds milli;
 
 int main(int argc, char* argv[]) {
+    // Sprawdzenie poprawności argumentów
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " <input_file_path> <output_file_path>" << std::endl;
         return 1;
     }
 
+    // Przypisanie ścieżek plików z argumentów
     std::string inputFilePath = argv[1];
     std::string outputFilePath = argv[2];
 
     // Wczytanie danych z pliku do wektora struktur Movie
     auto movies = FileIO::readData(inputFilePath);
 
+    // Wybór strategii sortowania
     std::unique_ptr<SortStrategy> sorter;
+    // Zmienne do przechowywania wyborów użytkownika
     int choice, sizeChoice, numOfTests;
 
+    // Interakcja z użytkownikiem dotycząca wyboru metody sortowania i zakresu danych
     std::cout << "Wybierz metodę sortowania:\n";
     std::cout << "1. Sortowanie przez scalanie (MergeSort)\n";
     std::cout << "2. Szybkie sortowanie (QuickSort)\n";
@@ -49,7 +54,8 @@ int main(int argc, char* argv[]) {
     std::cout << "Podaj liczbę testów do wykonania: ";
     std::cin >> numOfTests;
 
-    std::string algorithmName; // Zmienna do przechowywania nazwy algorytmu
+    // Zmienna do przechowywania nazwy algorytmu
+    std::string algorithmName; 
 
     // Przygotowanie odpowiedniego sortera w zależności od wyboru użytkownika
     switch (choice) {
@@ -99,6 +105,7 @@ int main(int argc, char* argv[]) {
             return 1;
 
     }
+    // Ograniczenie danych do mniejszej ilości, jeśli jest to konieczne
     dataSize = std::min(dataSize, movies.size());
 
     // Otwarcie pliku do dopisywania danych
@@ -112,6 +119,7 @@ int main(int argc, char* argv[]) {
         testTimeFile << "Test #" << i + 1 << ": " << time << "ms dla " << dataSize << " danych, używając " << algorithmName << "." << std::endl;
     }
 
+    // Zamknięcie pliku
     testTimeFile.close();
 
     // Sortowanie danych
@@ -120,6 +128,7 @@ int main(int argc, char* argv[]) {
     // Zapis posortowanych danych do pliku
     FileIO::writeData(outputFilePath, movies);
 
+    // Informacje o zakończeniu operacji
     std::cout << "Dane zostały posortowane i zapisane do pliku: " << outputFilePath << std::endl;
     std::cout << "Wyniki czasu wykonania zostały zapisane do pliku test_time.txt" << std::endl;
 
