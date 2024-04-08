@@ -38,9 +38,11 @@ int main(int argc, char* argv[]) {
     std::cout << "Wybierz zakres danych do sortowania:\n";
     std::cout << "1. Pierwsze 10 000\n";
     std::cout << "2. Pierwsze 100 000\n";
-    std::cout << "3. Pierwsze 500 000\n";
-    std::cout << "4. Pierwsze 1 000 000\n";
-    std::cout << "5. Maksymalna ilość danych\n";
+    std::cout << "3. Pierwsze 250 000\n";
+    std::cout << "4. Pierwsze 500 000\n";
+    std::cout << "5. Pierwsze 750 000\n";
+    std::cout << "6. Pierwsze 1 000 000\n";
+    std::cout << "7. Maksymalna ilość danych\n";
     std::cout << "Wybór: ";
     std::cin >> sizeChoice;
 
@@ -78,12 +80,18 @@ int main(int argc, char* argv[]) {
             dataSize = 100000;
             break;
         case 3:
-            dataSize = 500000;
+            dataSize = 250000;
             break;
         case 4:
-            dataSize = 1000000;
+            dataSize = 500000;
             break;
         case 5:
+            dataSize = 750000;
+            break;
+        case 6:
+            dataSize = 1000000;
+            break;
+        case 7:
             dataSize = movies.size();
             break;
         default:
